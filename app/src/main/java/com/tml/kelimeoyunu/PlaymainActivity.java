@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class PlaymainActivity extends AppCompatActivity {
 
     public Button btnPause, btnResume;
     public TextView timeView;
