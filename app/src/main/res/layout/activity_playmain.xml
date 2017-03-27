@@ -37,15 +37,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical|center_horizontal"
-            android:text="Question??"
             android:textSize="20sp" />
     </RelativeLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="20"
-        android:gravity="center_vertical|center_horizontal">
+        android:layout_height="wrap_content"
+        android:layout_weight="wrap_content"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/charButton1"
@@ -58,7 +58,6 @@
             android:id="@+id/charButton2"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_toRightOf="@id/charButton1"
             android:text="U"
             android:textSize="16sp" />
 
@@ -66,7 +65,6 @@
             android:id="@+id/charButton3"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_toRightOf="@id/charButton2"
             android:text="C"
             android:textSize="16sp" />
 
@@ -74,10 +72,9 @@
             android:id="@+id/charButton4"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_toRightOf="@id/charButton3"
             android:text="K"
             android:textSize="16sp" />
-    </RelativeLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
