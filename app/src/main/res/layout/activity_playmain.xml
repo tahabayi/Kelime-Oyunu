@@ -10,20 +10,19 @@
 
         <Button
             android:id="@+id/backButton"
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:text="<-" />
+            android:text="Back" />
 
         <TextView
-            android:id="@+id/timeTextView"
-            android:layout_width="50dp"
+            android:id="@+id/time_view"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:layout_alignBottom="@+id/backButton"
+            android:layout_alignBottom="@id/backButton"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:gravity="center_vertical|center_horizontal"
-            android:text="10sn"
             android:textSize="20sp" />
     </RelativeLayout>
 

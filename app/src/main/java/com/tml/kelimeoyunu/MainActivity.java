@@ -10,61 +10,49 @@ public class MainActivity extends AppCompatActivity {
 
     public Button btnPause, btnResume;
     public TextView timeView;
-    private int currentTime = 240;
-    boolean isRunning = false;
-    private android.os.Handler timerHandler= new android.os.Handler();
-    private Runnable timerRunnable = new Runnable() {
-        @Override
-        public void run() {
-
-            if(currentTime != 0){
-                timeView.setText( "Kalan süre: " +  currentTime + "sn");
-                currentTime--;
-            }else {
-                timeView.setText("Süre doldu!");
-            }
-
-            timerHandler.postDelayed(this, 1000);
-        }
-    };
-
+    private TimeCounter gameTime;
+    private TimeCounter answerTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_playmain);
 
-        btnPause = (Button) findViewById(R.id.btn_pause);
-        btnResume = (Button) findViewById(R.id.btn_resume);
+        btnPause = (Button) findViewById(R.id.cevaplaButton);
+        btnResume = (Button) findViewById(R.id.harfButton);
         timeView = (TextView) findViewById(R.id.time_view);
+
+        gameTime = new TimeCounter(241, timeView, true);
+        answerTime = new TimeCounter(100, timeView, false);
 
         btnResume.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!isRunning){
-                    timerRunnable.run();
-                    isRunning = true;
-                }
+                gameTime.run();
             }
         });
 
         btnPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                timerHandler.removeCallbacks(timerRunnable);
-                isRunning = false;
+                gameTime.stop();
             }
         });
 
-        timerRunnable.run();
-
+        gameTime.run();
 
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        timerHandler.removeCallbacks(timerRunnable);
+
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
 }
+
