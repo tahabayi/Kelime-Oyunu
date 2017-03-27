@@ -13,6 +13,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
+    public static int counter = 0;
 
     public int[] quesnums = new int[14];
     public int[] queslimits = {186,186,186,185,189,185,179};
@@ -31,17 +32,13 @@ public class MainActivity extends AppCompatActivity {
                 while(quesnums[i] == quesnums[i-1])
                     quesnums[i] = r.nextInt(queslimits[i/2]);
             FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference myRef = database.getReference().child(String.valueOf((int)(i/2)+4)).child(String.valueOf(quesnums[i]));
+            DatabaseReference myRef = database.getReference().child(String.valueOf((i/2)+4)).child(String.valueOf(quesnums[i]));
             myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    boolean isDone = true;
+                    counter +=1;
                     questions[count] = dataSnapshot.getValue(Question.class);
-                    for(int i=0;i<14;i++){
-                        if(questions[i]==null)
-                            isDone = false;
-                    }
-                    if(isDone)
+                    if(counter==14)
                         for(int i=0;i<14;i++)
                             Log.d("asd",questions[i].toString());
                 }
