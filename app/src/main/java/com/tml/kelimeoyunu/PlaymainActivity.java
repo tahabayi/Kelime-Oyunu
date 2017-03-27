@@ -2,9 +2,12 @@ package com.tml.kelimeoyunu;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -19,6 +22,7 @@ public class PlaymainActivity extends AppCompatActivity {
     private TimeCounter gameTime;
     private TimeCounter answerTime;
     private TextView questionTextView;
+    private LinearLayout buttonLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +33,7 @@ public class PlaymainActivity extends AppCompatActivity {
         btnResume = (Button) findViewById(R.id.harfButton);
         timeView = (TextView) findViewById(R.id.time_view);
         questionTextView = (TextView) findViewById(R.id.questionTextView);
+        buttonLayout = (LinearLayout) findViewById(R.id.button_layout);
 
         int letternum = getIntent().getIntExtra("letternum",4);
 
@@ -41,6 +46,7 @@ public class PlaymainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 gameTime.run();
+                answerTime.run();
             }
         });
 
@@ -54,6 +60,15 @@ public class PlaymainActivity extends AppCompatActivity {
 
         // Start game time
         gameTime.run();
+
+        // Add letter boxes into layout
+        LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(dpToPx(36), dpToPx(36));
+       for(int i=0; i<10; i++){
+           Button btn =new Button(this);
+           btn.setLayoutParams(lparams);
+           btn.setId(i);
+           buttonLayout.addView(btn);
+       }
 
 
 
@@ -86,4 +101,10 @@ public class PlaymainActivity extends AppCompatActivity {
         super.onResume();
 
     }
+
+    public int dpToPx(int dp) {
+        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+        return Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+    }
+
 }
