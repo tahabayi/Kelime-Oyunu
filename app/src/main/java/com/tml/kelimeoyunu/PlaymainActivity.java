@@ -18,7 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 public class PlaymainActivity extends AppCompatActivity {
 
     public Button btnPause, btnResume;
-    public TextView timeView;
+    public TextView timeTextView;
     private TimeCounter gameTime;
     private TimeCounter answerTime;
     private TextView questionTextView;
@@ -31,15 +31,15 @@ public class PlaymainActivity extends AppCompatActivity {
 
         btnPause = (Button) findViewById(R.id.cevaplaButton);
         btnResume = (Button) findViewById(R.id.harfButton);
-        timeView = (TextView) findViewById(R.id.time_view);
+        timeTextView = (TextView) findViewById(R.id.timeTextView);
         questionTextView = (TextView) findViewById(R.id.questionTextView);
         buttonLayout = (LinearLayout) findViewById(R.id.button_layout);
 
         int letternum = getIntent().getIntExtra("letternum",4);
 
         // Necessary Timer instances
-        gameTime = new TimeCounter(241, timeView, true);
-        answerTime = new TimeCounter(100, timeView, false);
+        gameTime = new TimeCounter(241, timeTextView, true);
+        answerTime = new TimeCounter(100, timeTextView, false);
 
 
         btnResume.setOnClickListener(new View.OnClickListener() {
@@ -63,8 +63,9 @@ public class PlaymainActivity extends AppCompatActivity {
 
         // Add letter boxes into layout
         LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(dpToPx(36), dpToPx(36));
-       for(int i=0; i<10; i++){
+       for(int i=0; i<letternum; i++){
            Button btn =new Button(this);
+           btn.setBackground(getResources().getDrawable(R.drawable.hexagon));
            btn.setLayoutParams(lparams);
            btn.setId(i);
            buttonLayout.addView(btn);

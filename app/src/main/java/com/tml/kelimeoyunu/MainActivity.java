@@ -1,8 +1,10 @@
 package com.tml.kelimeoyunu;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.Button;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -15,6 +17,7 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity {
     public static int counter = 0;
 
+    public Context context ;
     public int[] quesnums = new int[14];
     public int[] queslimits = {186,186,186,185,189,185,179};
     public Question[] questions= new Question[14];
@@ -23,6 +26,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        context = this;
+        Button btn_play = (Button) findViewById(R.id.btn_pause);
+
 
         Random r = new Random();
         for(int i = 0;i<14;i++){
@@ -38,9 +45,11 @@ public class MainActivity extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     counter +=1;
                     questions[count] = dataSnapshot.getValue(Question.class);
-                    if(counter==14)
-                        for(int i=0;i<14;i++)
-                            Log.d("asd",questions[i].toString());
+                    if(counter == 14){
+                        Intent i = new Intent(context, PlaymainActivity.class);
+                        i.putExtra("letternum", 4);
+                        startActivity(i);
+                    }
                 }
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
@@ -48,5 +57,9 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
+
     }
+
+
+
 }

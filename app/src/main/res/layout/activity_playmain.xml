@@ -2,92 +2,131 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="100">
+    android:weightSum="100"
+    android:background="@drawable/background"
+    android:padding="10dp"
+    >
 
     <RelativeLayout
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/backButton"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:text="Back" />
+        <TextView
+            android:id="@+id/totalPointTextView"
+            android:layout_width="100dp"
+            android:layout_height="60dp"
+            android:background="@drawable/hexagon"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:gravity="center_vertical|center_horizontal"
+            android:text="9800"
+            android:textSize="16sp"
+            android:textColor="#5d2222"/>
 
         <TextView
-            android:id="@+id/time_view"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_alignBottom="@id/backButton"
+            android:id="@+id/timeTextView"
+            android:layout_width="90dp"
+            android:layout_height="60dp"
+            android:background="@drawable/time"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:gravity="center_vertical|center_horizontal"
-            android:textSize="20sp" />
+            android:text="04:00"
+            android:textSize="20sp"
+            android:textColor="#ffffff"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_toLeftOf="@id/timeTextView"
+            android:layout_toRightOf="@id/totalPointTextView">
+            <TextView
+                android:id="@+id/questPointTextView"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:background="@drawable/hexagonred"
+                android:layout_alignParentTop="true"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="1000"
+                android:textSize="16sp"
+                android:textColor="#ffffff"/>
+        </LinearLayout>
+
+
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="25"
-        android:gravity="center_vertical|center_horizontal">
+        android:layout_weight="30"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:gravity="center_vertical|center_horizontal"
+        android:background="@drawable/oval">
 
         <TextView
+            android:padding="30dp"
             android:id="@+id/questionTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical|center_horizontal"
-            android:textSize="20sp" />
+            android:text="Bir şeyin üstünü kaplayan koruyucu bölüm asd asd sad sadasdsa dsad"
+            android:textColor="#ffffff"
+            android:textSize="14sp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
     </RelativeLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_margin="20dp"
+        android:id="@+id/button_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:id="@+id/button_layout">
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="horizontal">
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="20"
-        android:orientation="horizontal"
-        android:weightSum="2">
+        android:layout_weight="50"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical|center_horizontal"
-            android:orientation="horizontal"
-            android:weightSum="3">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
             <Button
                 android:id="@+id/cevaplaButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
                 android:text="Cevapla"
-                android:textSize="16sp" />
+                android:textColor="#5d2222"
+                android:background="#d3d3d3"
+                android:layout_width="120dp"
+                android:layout_height="60dp" />
         </LinearLayout>
+
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical|center_horizontal"
-            android:orientation="horizontal"
-            android:weightSum="3">
-
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
             <Button
                 android:id="@+id/harfButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
                 android:text="Harf Lütfen"
-                android:textSize="16sp" />
+                android:background="#d3d3d3"
+                android:layout_width="120dp"
+                android:layout_height="60dp"
+                android:textColor="#5d2222"/>
         </LinearLayout>
+
+
     </LinearLayout>
 </LinearLayout>
