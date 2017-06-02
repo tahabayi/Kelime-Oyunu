@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 
 public class PlaymainActivity extends AppCompatActivity {
@@ -35,7 +36,9 @@ public class PlaymainActivity extends AppCompatActivity {
         questionTextView = (TextView) findViewById(R.id.questionTextView);
         buttonLayout = (LinearLayout) findViewById(R.id.button_layout);
 
-        int letternum = getIntent().getIntExtra("letternum",4);
+        String questionsString = getIntent().getExtras().getString("questionsString");
+        Question[] questions = new Gson().fromJson(questionsString, Question[].class);
+
 
         // Necessary Timer instances
         gameTime = new TimeCounter(241, timeTextView, true);
@@ -63,7 +66,7 @@ public class PlaymainActivity extends AppCompatActivity {
 
         // Add letter boxes into layout
         LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(dpToPx(36), dpToPx(36));
-       for(int i=0; i<letternum; i++){
+       for(int i=0; i<questions[0].no; i++){
            Button btn =new Button(this);
            btn.setBackground(getResources().getDrawable(R.drawable.hexagon));
            btn.setLayoutParams(lparams);
@@ -71,9 +74,11 @@ public class PlaymainActivity extends AppCompatActivity {
            buttonLayout.addView(btn);
        }
 
+       questionTextView.setText(questions[0].question+" ?");
 
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+        /*FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference();
         myRef = myRef.child(String.valueOf(letternum)).child("0");
         myRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -87,7 +92,7 @@ public class PlaymainActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
+        });*/
     }
 
 

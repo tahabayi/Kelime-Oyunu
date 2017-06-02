@@ -11,6 +11,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.gson.Gson;
 
 import java.util.Random;
 
@@ -47,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
                     questions[count] = dataSnapshot.getValue(Question.class);
                     if(counter == 14){
                         Intent i = new Intent(context, PlaymainActivity.class);
-                        i.putExtra("letternum", 4);
+                        String questionsString = new Gson().toJson(questions);
+                        i.putExtra("questionsString", questionsString);
                         startActivity(i);
                     }
                 }

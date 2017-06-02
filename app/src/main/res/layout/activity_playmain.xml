@@ -70,17 +70,16 @@
         android:background="@drawable/oval">
 
         <TextView
-            android:padding="30dp"
             android:id="@+id/questionTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical|center_horizontal"
-            android:text="Bir şeyin üstünü kaplayan koruyucu bölüm asd asd sad sadasdsa dsad"
-            android:textColor="#ffffff"
-            android:textSize="14sp"
-            android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical|center_horizontal"
+            android:padding="30dp"
+            android:textColor="#ffffff"
+            android:textSize="14sp" />
     </RelativeLayout>
 
     <LinearLayout
