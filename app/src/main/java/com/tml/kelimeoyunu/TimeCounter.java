@@ -1,5 +1,6 @@
 package com.tml.kelimeoyunu;
 
+import android.os.Handler;
 import android.widget.TextView;
 
 /**
@@ -8,11 +9,29 @@ import android.widget.TextView;
 
 public class TimeCounter {
 
+    public int getUpperLimit() {
+        return upperLimit;
+    }
+
+    public void setUpperLimit(int upperLimit) {
+        this.upperLimit = upperLimit;
+    }
+
     private int upperLimit;
     private TextView tView;
     private boolean isRunning = false;
     private boolean show ;
+
+    public Handler getTimerHandler() {
+        return timerHandler;
+    }
+
     private android.os.Handler timerHandler= new android.os.Handler();
+
+    public void setTimerRunnable(Runnable timerRunnable) {
+        this.timerRunnable = timerRunnable;
+    }
+
     private Runnable timerRunnable = new Runnable() {
         @Override
         public void run() {
@@ -23,7 +42,7 @@ public class TimeCounter {
             }else if(upperLimit != 0){
                 upperLimit--;
             }else{
-                    tView.setText("Süre doldu!");
+                tView.setText("Süre doldu!");
             }
 
 

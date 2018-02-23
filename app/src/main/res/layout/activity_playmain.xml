@@ -5,6 +5,7 @@
     android:weightSum="100"
     android:background="@drawable/background"
     android:padding="10dp"
+    android:id="@+id/layout_play"
     >
 
     <RelativeLayout
