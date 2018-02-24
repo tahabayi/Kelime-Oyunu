@@ -193,7 +193,7 @@ public class PlaymainActivity extends AppCompatActivity {
                 answerTime.run();
                 gameTimer.stop();
 
-                for(int i = 0;i<23;i++){
+                for(int i = 0;i<30;i++){
                     final Button harfBtn = (Button) harfLayout.getChildAt(i);
                     harfBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -210,7 +210,7 @@ public class PlaymainActivity extends AppCompatActivity {
                     });
                 }
 
-                findViewById(R.id.button28).setOnClickListener(new View.OnClickListener() {
+                findViewById(R.id.button30).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         for(int i = 0;i<questions[questionNum].no;i++){
@@ -224,7 +224,7 @@ public class PlaymainActivity extends AppCompatActivity {
                     }
                 });
 
-                findViewById(R.id.button29).setOnClickListener(new View.OnClickListener() {
+                findViewById(R.id.button31).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         for(int i = questions[questionNum].no-1;i>=0;i--){
@@ -238,7 +238,7 @@ public class PlaymainActivity extends AppCompatActivity {
                     }
                 });
 
-                findViewById(R.id.button30).setOnClickListener(new View.OnClickListener() {
+                findViewById(R.id.button32).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         correnctAns(answerTime);
