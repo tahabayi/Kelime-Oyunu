@@ -1,6 +1,7 @@
 package com.tml.kelimeoyunu;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
@@ -16,7 +17,6 @@ import java.util.Random;
 
 public class PlaymainActivity extends AppCompatActivity {
 
-    private List<Integer> harfArr;
     private static Question[] questions = MainActivity.questions;
     private TimeCounter gameTimer;
     private int questionNum = 0;
@@ -87,11 +87,23 @@ public class PlaymainActivity extends AppCompatActivity {
     }
 
     public void setQuestions(int questionNum){
+        if(questionNum==14){
+            btnHarf.setVisibility(View.INVISIBLE);
+            btnCvp.setVisibility(View.INVISIBLE);
+            buttonLayout.setVisibility(View.INVISIBLE);
+            harfLayout.setVisibility(View.INVISIBLE);
+            gameTimer.stop();
+            questionTextView.setText("Yarisma bitti!");
+            return;
+        }
+
+        gameTimer.run();
+        harfLayout.setVisibility(View.INVISIBLE);
         btnHarf.setClickable(true);
         btnCvp.setClickable(true);
         buttonLayout.removeAllViewsInLayout();
-        harfArr = new ArrayList<Integer>();
         harfFilled = new boolean[questions[questionNum].no];
+        harfPicked = new boolean[questions[questionNum].no];
 
 
         questionTextView.setText(questions[questionNum].question+" ?");
@@ -109,10 +121,6 @@ public class PlaymainActivity extends AppCompatActivity {
             btn.setId(i);
             buttonLayout.addView(btn);
         }
-
-        for(int i = 0;i<questions[questionNum].no;i++){
-            harfArr.add(i);
-        }
     }
 
     public void setOnClicks(){
@@ -122,20 +130,31 @@ public class PlaymainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // TODO cevap zaten cikti
-                if(harfArr.size()==0){
-                    questionNum += 1;
-                    setQuestions(questionNum);
-                    return;
-                }
+                ArrayList<Integer> harfArr = new ArrayList<Integer>();
+                for(int i = 0;i<questions[questionNum].no;i++)
+                    if(!harfPicked[i])
+                        harfArr.add(i);
                 Random r = new Random();
                 int rand = r.nextInt(harfArr.size());
                 int btn_no = harfArr.get(rand);
-                harfArr.remove(rand);
+                harfPicked[btn_no] = true;
                 Button b = (Button) findViewById(btn_no);
                 b.setText(String.valueOf(questions[questionNum].answer.charAt(btn_no)));
                 questPoint -= 100;
                 questPointTextView.setText(String.valueOf(questPoint));
                 harfFilled[btn_no] = true;
+                if(isFilled()){
+                    btnHarf.setClickable(false);
+                    btnCvp.setClickable(false);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            questionNum += 1;
+                            setQuestions(questionNum);
+                            return;
+                        }
+                    }, 500);
+                }
             }
         });
 
@@ -152,12 +171,18 @@ public class PlaymainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         if(answerTime.getUpperLimit()!=0) {
+                            timeTextView.setText(answerTime.getUpperLimit()+" sn");
                             answerTime.setUpperLimit(answerTime.getUpperLimit()-1);
                         }else{
-                            for(int i=0; i<questions[questionNum].no; i++){
+                            answerTime.stop();
+                            totalPoint -= questPoint;
+                            totalPointTextView.setText(String.valueOf(totalPoint));
+                            questionNum += 1;
+                            setQuestions(questionNum);
+                            /*for(int i=0; i<questions[questionNum].no; i++){
                                 Button btn = (Button) findViewById(i);
                                 btn.setText("x");
-                            }
+                            }*/
                             return;
                         }
 
@@ -168,7 +193,24 @@ public class PlaymainActivity extends AppCompatActivity {
                 answerTime.run();
                 gameTimer.stop();
 
-                findViewById(R.id.button1).setOnClickListener(new View.OnClickListener() {
+                for(int i = 0;i<23;i++){
+                    final Button harfBtn = (Button) harfLayout.getChildAt(i);
+                    harfBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            for(int i = 0;i<questions[questionNum].no;i++){
+                                if(!harfFilled[i]){
+                                    harfFilled[i] = true;
+                                    Button b = (Button) findViewById(i);
+                                    b.setText(harfBtn.getText());
+                                    break;
+                                }
+                            }
+                        }
+                    });
+                }
+
+                findViewById(R.id.button28).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         for(int i = 0;i<questions[questionNum].no;i++){
@@ -182,37 +224,53 @@ public class PlaymainActivity extends AppCompatActivity {
                     }
                 });
 
-                findViewById(R.id.button3).setOnClickListener(new View.OnClickListener() {
+                findViewById(R.id.button29).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        for(int i = 0;i<questions[questionNum].no;i++){
-                            if(!harfFilled[i]){
-                                harfFilled[i] = true;
+                        for(int i = questions[questionNum].no-1;i>=0;i--){
+                            if(harfFilled[i]&&!harfPicked[i]){
+                                harfFilled[i] = false;
                                 Button b = (Button) findViewById(i);
-                                b.setText("A");
+                                b.setText("");
                                 break;
                             }
                         }
                     }
                 });
 
-                findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
+                findViewById(R.id.button30).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String s = "";
-                        for(int j = 0;j<questions[questionNum].no;j++){
-                            Button b1 = (Button) findViewById(j);
-                            s += b1.getText();
-                        }
-                        if(s.equals(questions[questionNum].answer)){
-                            questionNum += 1;
-                            setQuestions(questionNum);
-                        }
+                        correnctAns(answerTime);
                     }
                 });
             }
         });
 
+    }
+
+    public boolean isFilled(){
+        for(int i = 0;i<questions[questionNum].no;i++){
+            if(!harfFilled[i]){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void correnctAns(TimeCounter answerTime){
+        String s = "";
+        for(int j = 0;j<questions[questionNum].no;j++){
+            Button b1 = (Button) findViewById(j);
+            s += b1.getText();
+        }
+        if(s.equals(questions[questionNum].answer)){
+            answerTime.stop();
+            totalPoint += questPoint;
+            totalPointTextView.setText(String.valueOf(totalPoint));
+            questionNum += 1;
+            setQuestions(questionNum);
+        }
     }
 
 }
