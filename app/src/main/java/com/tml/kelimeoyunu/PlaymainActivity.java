@@ -166,7 +166,7 @@ public class PlaymainActivity extends AppCompatActivity {
                 harfLayout.setVisibility(View.VISIBLE);
 
 
-                final TimeCounter answerTime = new TimeCounter(10, timeTextView, false);
+                final TimeCounter answerTime = new TimeCounter(17, timeTextView, false);
                 answerTime.setTimerRunnable( new Runnable() {
                     @Override
                     public void run() {
